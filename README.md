@@ -5,7 +5,7 @@ Hier könnter ein cooler Name stehen
 
 # Teammitglieder
 Listen Sie hier noch einmal alle Teammitglieder auf.
-- Oliver Mertens     ->   1119032
+- Oliver Mertens     ->   11119032
 - Daniel Weyand     ->  11120186
 
 # Featureliste
