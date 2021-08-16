@@ -42,8 +42,8 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
     //private var spotLight: SpotLight
     private var mousePosi: Vector2f = Vector2f(0.0f,0.0f)
     private var firstMouseMove: Boolean = true
-    private var hexaMesh: Mesh
-    private var dameSteinMesh: Mesh
+    private var hexagonMeshLand: Mesh
+    private var tokenMesh: Mesh
     private var listOfTokens: MutableList<Token> = mutableListOf()
     private var listOfHexagons: MutableList<Hexagon> = mutableListOf()
     private var diceMesh: Mesh
@@ -56,7 +56,7 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
     private var lightytighty: Int = 4
     private var diceRoll: Int = 0
     private var pointLightGlobal: PointLight
-    private var start: Hexagon
+    //private var start: Hexagon
     private var rot :Boolean = false
     private var gelb :Boolean = false
     private var gruen :Boolean = false
@@ -64,7 +64,7 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
     private var cameraType : Int = 2
     private var skybox: Skybox = Skybox()
     private var skyboxScale: Transformable = Transformable()
-    private var groundMaterial: Material
+    private var hexagonMaterialLand: Material
     private var shaderStatus: Int = 0
     private var levels: Float = 3f
     private var lastPressed: Int = 0
@@ -80,6 +80,9 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
     private var turnZ: Int = 0
     private var randomNumberArray: Array<Int> = arrayOf(-17,-16,-15,-14,-13,-12,-11,-10,17,16,15,14,13,12,11,10)
     private val tokenMaterial: Material
+    private val hexagonMaterial: Material
+    private val hexagonMeshWater: Mesh
+
 
     //scene setup
     init {
@@ -96,6 +99,8 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
         glEnable(GL_DEPTH_TEST); GLError.checkThrow()
         glDepthFunc(GL_LESS); GLError.checkThrow()
 
+
+        // Verschiedene Kameras einrichten
         cameraCeiling = TronCamera()
 
         cameraCeiling.rotateLocal(-1.57f, 0.0f, 0f)
@@ -114,130 +119,6 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
         cameraDice.rotateLocal(0f,3.14f,0f)
 
 
-    val vertexData :FloatArray = floatArrayOf(
-        -0.5f, -0.5f, 0.0f, //position vertex 0
-        0.0f, 0.0f, 1.0f, //colour vertex 0
-        0.5f, -0.5f, 0.0f, //position vertex 1
-        0.0f, 0.0f, 1.0f, //colour vertex 1
-        0.5f, 0.5f, 0.0f, //position vertex 2
-        0.0f, 1.0f, 0.0f, //colour vertex 2
-        0.0f, 1.0f, 0.0f, //position vertex 3
-        1.0f, 0.0f, 0.0f, //colour vertex 3
-        -0.5f, 0.5f, 0.0f, //position vertex 4
-        0.0f, 1.0f, 0.0f  //colour vertex 4
-        )
-
-        val indexData :IntArray = intArrayOf(
-            0, 1, 2,
-            0, 2, 4,
-            4, 2, 3
-        )
-
-        val test = VertexAttribute(3, GL_FLOAT, 24, 0)
-        val test1 = VertexAttribute(3 , GL_FLOAT, 24, 3*4)
-        val vertexArray = arrayOf(test,test1)
-        //mesh1 = Mesh(vertexData, indexData, vertexArray)
-
-        // Initialen
-        val vertexInitialD = floatArrayOf(
-            //Viereck D
-            -1.0f, -0.5f, 0.0f, //0
-            0.0f,0.0f,
-            0.0f, 1.0f, 0.0f,
-            -1.0f, 0.5f, 0.0f,  //1
-            0.0f,0.0f,
-            0.0f, 1.0f, 0.0f,
-            -0.8f, 0.5f, 0.0f,  //2
-            0.0f,0.0f,
-            0.0f, 1.0f, 0.0f,
-            -0.8f, -0.5f, 0.0f, //3
-            0.0f,0.0f,
-            0.0f, 1.0f, 0.0f,
-
-            // 1. Dreieck D
-            -0.8f, 0.5f, 0.0f,  //4
-            0.0f,0.0f,
-            0.0f, 1.0f, 0.0f,
-            -0.5f, 0.5f, 0.0f,  //5
-            0.0f,0.0f,
-            0.0f, 1.0f, 0.0f,
-            -0.5f, 0.0f, 0.0f,  //6
-            0.0f,0.0f,
-            0.0f, 1.0f, 0.0f,
-
-            // 2. Dreieck D
-            -0.8f, -0.5f, 0.0f, //7
-            0.0f,0.0f,
-            0.0f, 1.0f, 0.0f,
-            -0.5f, -0.5f, 0.0f,  //8
-            0.0f,0.0f,
-            0.0f, 1.0f, 0.0f,
-            -0.5f, 0.0f, 0.0f,  //9
-            0.0f,0.0f,
-            0.0f, 0.0f, 0.0f
-        )
-
-        val vertexInitialW = floatArrayOf(
-            //Rechteck 1
-            -0.2f, 0.5f, 0.0f,  //0
-            1.0f, 1.0f, 0.0f,
-            0.0f, 0.5f, 0.0f,   //1
-            1.0f, 1.0f, 0.0f,
-            0.0f, -0.5f, 0.0f,  //2
-            1.0f, 1.0f, 0.0f,
-            0.2f, -0.5f, 0.0f,  //3
-            1.0f, 1.0f, 0.0f,
-
-            //Dreieck 1
-            0.2f, -0.5f, 0.0f,  //4
-            1.0f, 1.0f, 0.0f,
-            0.3f, -0.5f, 0.0f,  //5
-            1.0f, 1.0f, 0.0f,
-            0.4f, 0.5f, 0.0f,   //6
-            1.0f, 1.0f, 0.0f,
-
-            //Dreieck 2
-            0.4f, 0.5f, 0.0f,  //7
-            1.0f, 1.0f, 0.0f,
-            0.5f, -0.5f, 0.0f,  //8
-            1.0f, 1.0f, 0.0f,
-            0.6f, -0.5f, 0.0f,  //9
-            1.0f, 1.0f, 0.0f,
-
-            //Rechteck 2
-            0.6f, -0.5f, 0.0f,  //10
-            1.0f, 1.0f, 0.0f,
-            0.8f, -0.5f, 0.0f,  //11
-            1.0f, 1.0f, 0.0f,
-            0.8f, 0.5f, 0.0f,  //12
-            1.0f, 1.0f, 0.0f,
-            1.0f, 0.5f, 0.0f,  //13
-            1.0f, 1.0f, 0.0f
-        )
-
-        val indexInitialD = intArrayOf(
-            0, 2, 1,
-            0, 3, 2,
-            4, 6, 5,
-            7, 8, 9
-        )
-
-        val indexInitialW = intArrayOf(
-            0, 2, 1,
-            2, 3, 1,
-            4, 5, 6,
-            7, 8, 9,
-            10, 11, 12,
-            13, 12, 11
-        )
-
-        val initial1 = VertexAttribute(3, GL_FLOAT, 24, 0)
-        val initial2 = VertexAttribute(3, GL_FLOAT, 24, 3*4)
-        val initialArray = arrayOf(initial1, initial2)
-
-        //initialMeshW = Mesh(vertexInitialW, indexInitialW, initialArray)
-
-
         //Create the Mesh
         val stride = 8*4
         val attrPos = VertexAttribute(3, GL_FLOAT, stride,0)
@@ -245,9 +126,9 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
         val attrNorm = VertexAttribute(3, GL_FLOAT, stride, 5*4)
         vertexAttribute = arrayOf(attrPos, attrTC, attrNorm)
 
-        //initialMeshD = Mesh(vertexInitialD, indexInitialD, vertexAttribute)
 
 
+        //Textur Material erstellen
         emit = Texture2D("assets/textures/tilemap.png", true)
         emit.setTexParams(GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR)
         diff = Texture2D("assets/textures/ground_diff.png", true)
@@ -257,30 +138,35 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
         material = Material(diff, emit, spec, 60.0f, Vector2f(1f))
 
 
-        val groundTexture = Texture2D("assets/textures/board.png", true)
-        groundTexture.setTexParams(GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR)
-        groundMaterial = Material(Texture2D("assets/textures/ground_diff.png", false),groundTexture, Texture2D("assets/textures/ground_diff.png",false), 60f, Vector2f(64f))
-
-        //lightCycle = loadModel("assets/Light Cycle/Light Cycle/HQ_Movie cycle.obj", -1.57f, 1.57f, 0.0f)
-        //lightCycle?.scaleLocal(Vector3f(0.8f,0.8f,0.8f))
-
-
+        val hexagonLandTexture = Texture2D("assets/textures/Hexagon_Land.png", true)
+        hexagonLandTexture.setTexParams(GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR)
+        hexagonMaterialLand = Material(Texture2D("assets/textures/ground_diff.png", false),hexagonLandTexture, Texture2D("assets/textures/ground_diff.png",false), 60f, Vector2f(1f))
 
         val hexa : OBJLoader.OBJResult = OBJLoader.loadOBJ("assets/models/hex.obj", false, false)
         val hexaMeshList : MutableList<OBJLoader.OBJMesh> = hexa.objects[0].meshes
-        hexaMesh = Mesh(hexaMeshList[0].vertexData, hexaMeshList[0].indexData, vertexAttribute)
-        val renderableListHexa : MutableList<Mesh> = mutableListOf()
-        renderableListHexa.add(hexaMesh)
+        hexagonMeshLand = Mesh(hexaMeshList[0].vertexData, hexaMeshList[0].indexData, vertexAttribute, hexagonMaterialLand)
 
+        val hexagonWaterTexture = Texture2D("assets/textures/Hexagon.png", true)
+        hexagonWaterTexture.setTexParams(GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR)
+        hexagonMaterial = Material(Texture2D("assets/textures/ground_diff.png", false),hexagonWaterTexture, Texture2D("assets/textures/ground_diff.png",false), 60f, Vector2f(1f))
+        hexagonMeshWater = Mesh(hexaMeshList[0].vertexData, hexaMeshList[0].indexData, vertexAttribute, hexagonMaterial)
+        val renderableListHexa: MutableList<Mesh> = mutableListOf()
+        renderableListHexa.add(hexagonMeshLand)
+        val renderableListHexaWater: MutableList<Mesh> = mutableListOf()
+        renderableListHexaWater.add(hexagonMeshWater)
+
+
+        //Hexagone werden zu der listOfHexagons hinzugefügt und es wird zwischen Wasserfeld und nicht Wasserfeld unterschieden
         for (i in 0 until 36){
             if (i == 6|| i == 12 || i == 13 || i == 18 || i == 19 || i == 20 || i == 24 || i == 25 || i == 26 || i == 27 || i == 30 || i == 31 || i == 32
                 || i == 33 || i == 34){
-                listOfHexagons.add(Hexagon(mutableListOf(), true, renderableListHexa))
-            } else
-            listOfHexagons.add(Hexagon(mutableListOf(),false, renderableListHexa))
+                listOfHexagons.add(Hexagon(mutableListOf(), true, renderableListHexaWater))
+            } else{
+                listOfHexagons.add(Hexagon(mutableListOf(),false, renderableListHexa))
+            }
         }
 
-
+        //Hexagone werden auf dem Spielfeld platziert
         for (i in 0 until 36){
 
             if(i in 0 until  4){
@@ -386,49 +272,54 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
             }
         }
 
-        start = Hexagon(mutableListOf(), false, mutableListOf())
-
-        val dameStein : OBJLoader.OBJResult = OBJLoader.loadOBJ("assets/models/dameSteinNeu.obj", false, false)
-        val dameSteinMeshList : MutableList<OBJLoader.OBJMesh> = dameStein.objects[0].meshes
+        //start = Hexagon(mutableListOf(), false, mutableListOf())
+        //Token Objekt reinladen und Textur mitgeben
+        val token : OBJLoader.OBJResult = OBJLoader.loadOBJ("assets/models/dameSteinNeu.obj", false, false)
+        val tokenMeshList : MutableList<OBJLoader.OBJMesh> = token.objects[0].meshes
         val tokenTexture = Texture2D("assets/textures/Tokenmap.png", true)
         tokenTexture.setTexParams(GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR)
         tokenMaterial = Material(Texture2D("assets/textures/ground_diff.png", false),tokenTexture, Texture2D("assets/textures/ground_diff.png",false), 60f, Vector2f(1f))
 
-        dameSteinMesh = Mesh(dameSteinMeshList[0].vertexData, dameSteinMeshList[0].indexData, vertexAttribute, tokenMaterial)
+        tokenMesh = Mesh(tokenMeshList[0].vertexData, tokenMeshList[0].indexData, vertexAttribute, tokenMaterial)
 
-        val renderableListDameStein : MutableList<Mesh> = mutableListOf()
-        renderableListDameStein.add(dameSteinMesh)
+        val renderableListToken : MutableList<Mesh> = mutableListOf()
+        renderableListToken.add(tokenMesh)
 
+        //Token wird im Startgebiet platziert und in die listOfTokens hinzugefügt
         var counter = 0
         for (k in 0 until playerCount){
 
             for (i in 0 until 4)
             {
                 if (k<2){
-                    listOfTokens.add(Token(true, 0, playerColour[k], i+1, false, renderableListDameStein))
+                    listOfTokens.add(Token(true, 0, playerColour[k], i+1, false, renderableListToken))
                     if (listOfTokens[counter].number == 4) listOfTokens[counter].isBlocked = false
                     listOfTokens[counter].scaleLocal(Vector3f(0.5f))
                     listOfTokens[counter].translateGlobal(Vector3f(17.7f- k * 1.3f,0.1f + i * 0.16f,16f))
-                    start.hexagonListOfTokens.add(listOfTokens[counter])
+                    //start.hexagonListOfTokens.add(listOfTokens[counter])
                     counter++
                 }
                 else if (k>1) {
-                    listOfTokens.add(Token(true, 0, playerColour[k], i+1, false, renderableListDameStein))
+                    listOfTokens.add(Token(true, 0, playerColour[k], i+1, false, renderableListToken))
                     if (listOfTokens[counter].number == 4) listOfTokens[counter].isBlocked = false
                     listOfTokens[counter].scaleLocal(Vector3f(0.5f))
                     listOfTokens[counter].translateGlobal(Vector3f(17.7f- (k-2) * 1.3f,0.1f + i * 0.16f,18f))
-                    start.hexagonListOfTokens.add(listOfTokens[counter])
+                    //start.hexagonListOfTokens.add(listOfTokens[counter])
                     counter++
 
                 }
             }
         }
+
+        //es wird geguckt welche Farben für die Spieler gewählt wurden
         for (i in 0 until listOfTokens.size){
             if (listOfTokens[i].colour == Vector3f(3f,0f,0f)) rot =true
             if (listOfTokens[i].colour == Vector3f(3f,3f,0f)) gelb =true
             if (listOfTokens[i].colour == Vector3f(0f,3f,0f)) gruen =true
             if (listOfTokens[i].colour == Vector3f(0f,0f,3f)) blau =true
         }
+
+        //Würfelobjekt wird reingeladen, Textur wird hinzugefügt und in der Welt platziert
         val dice : OBJLoader.OBJResult = OBJLoader.loadOBJ("assets/models/Dice.obj", false, false)
         val diceMeshList : MutableList<OBJLoader.OBJMesh> = dice.objects[0].meshes
         val diceTexture = Texture2D("assets/textures/Dicemap.png", true)
@@ -445,30 +336,8 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
         renderableDice.scaleLocal(Vector3f(2f))
         renderableDice.translateGlobal(Vector3f(5f, 0.5f,-0.5f))
 
-        //1
-        //renderableDice.rotateLocal(3.14f,0f,0f)
-        //2
-        //renderableDice.rotateLocal(0f,1.57f,0f)
-        //3
-        //renderableDice.rotateLocal(-1.57f,0f,0f)
-        //4
-        //renderableDice.rotateLocal(1.57f,0f,0f)
-        //5
-        //renderableDice.rotateLocal(0f,-1.57f,0f)
-        //6
-        //renderableDice.rotateLocal(0f,0f,0f)
 
-        /*val startquad : OBJLoader.OBJResult = OBJLoader.loadOBJ("assets/models/start.obj", false, false)
-        val startMeshList: MutableList<OBJLoader.OBJMesh> = startquad.objects[0].meshes
-        startMesh = Mesh(startMeshList[0].vertexData, startMeshList[0].indexData, vertexAttribute, groundMaterial)
-        val renderableListStart: MutableList<Mesh> = mutableListOf()
-        renderableListStart.add(startMesh)
-        renderableStart = Renderable(renderableListStart)
-
-        renderableStart.scaleLocal(Vector3f(0.1f, 0.15f,0.1f))
-        renderableStart.translateGlobal(Vector3f(17f, 0f, 17f))
-        //renderableStart.rotateLocal(0f, 0f, 1.57f)*/
-
+        //Bodenobjekt wird reingeladen, Textur wird hinzugefügt und in der Welt platziert
         val ground : OBJLoader.OBJResult = OBJLoader.loadOBJ("assets/models/ground.obj", false, false)
         val groundMeshList: MutableList<OBJLoader.OBJMesh> = ground.objects[0].meshes
         groundMesh = Mesh(groundMeshList[0].vertexData, groundMeshList[0].indexData, vertexAttribute, material)
@@ -478,21 +347,18 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
         renderableGround.scaleLocal(Vector3f(0.74f,0.5f,0.5f))
         renderableGround.translateGlobal(Vector3f(5f,0f,9f))
 
-
+        //Lichter werden erzeugt und platziert
         pointLightFeld = PointLight(Vector3f(50.0f,1f,0.0f), listOfTokens[0].colour, Vector3f(1.0f, 0.5f, 0.1f))
         pointLightToken = PointLight(Vector3f(0f, 10f,0f), Vector3f(1f, 1f, 1f), Vector3f(1.0f, 0.5f, 0.1f))
         //spotLight = SpotLight(Vector3f(0.0f,1.0f,0.0f), Vector3f(1.0f, 1.0f, 1.0f), 0.17f, 0.44f, Vector3f(0.5f, 0.05f, 0.01f))
-        pointLightGlobal = PointLight(Vector3f(3f, 1f, 3f), Vector3f(1f), Vector3f(1.0f,0.5f,0.1f))
+        pointLightGlobal = PointLight(Vector3f(6f, 10f, 10f), Vector3f(10f), Vector3f(1.0f,0.5f,0.1f))
 
         pointLightToken.rotateLocal(1.57f, 0f, 0f)
 
-        //renderableGround.scaleLocal(Vector3f(1f,1f,0.5f))
-
-        //Camera.parent = lightCycle
-        //pointLight.parent = lightCycle
-        //spotLight.parent = lightCycle
+        //Token Kamera wird an den obersten Stein des ersten Spielers angehängt
         cameraToken.parent = listOfTokens[3]
 
+        //Cubemap pngs werden in einem Array gespeichert
         val facesCubemapStil1 = arrayOf<String>(
             "assets/textures/right.png",
             "assets/textures/left.png",
@@ -513,13 +379,13 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
 
         )
 
+        //Skybox Textur wird ausgewählt und Skybox wird in der Welt platziert
         skybox.loadCubemap(facesCubemapStil1)
         skyboxScale.scaleLocal(Vector3f(15f,15f,11f))
         skyboxScale.translateGlobal(Vector3f(5f,10f,9f))
 
-        //skyboxShader.use()
         skyboxShader.setUniform("skybox", 0)
-        //staticShader.use()
+
 
     }
 
@@ -575,11 +441,11 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
         staticShader.setUniform3f("sceneColor", Vector3f(3f,3f,0f))
         for (i in 0 until listOfHexagons.size){
             if (listOfHexagons[i].isWater){
-                staticShader.setUniform3f("sceneColor", Vector3f(0f,0f,3f))
+                staticShader.setUniform3f("sceneColor", Vector3f(0.5f, 0.7f, 1.1f))
                 listOfHexagons[i].render(staticShader)
             }
             else {
-                staticShader.setUniform3f("sceneColor", Vector3f(3f, 3f, 3f))
+                staticShader.setUniform3f("sceneColor", Vector3f(1f, 1f, 1f))
                 listOfHexagons[i].render(staticShader)
             }
         }
@@ -594,10 +460,6 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
             }
 
         }
-
-
-        //staticShader.setUniform3f("sceneColor", Vector3f(sin(t/1)+1, sin(t/2)+1, sin(t/3)+1))
-        //lightCycle?.render(staticShader)
 
         glDepthFunc(GL_LEQUAL)
         glDepthMask(false)
@@ -673,7 +535,7 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
             }
         }
 
-        if (cameraType == 2){
+        /*if (cameraType == 2){
             if (window.getKeyState(GLFW.GLFW_KEY_SPACE)) {
                 cameraCeiling.translateLocal(Vector3f(0f, 0f, 4f*dt))
             }
@@ -681,6 +543,8 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
                 cameraCeiling.translateLocal(Vector3f(0f, 0f, -4f*dt))
             }
         }
+        
+         */
 
         if (cameraType == 4){
 
@@ -762,22 +626,14 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
 
             }
 
-
-            pointLightFeld.lightColor = listOfTokens[lightytighty-1+ 4 *(playersTurn-1)].colour
+            if (listOfTokens[lightytighty-1+ 4 *(playersTurn-1)].colour == Vector3f(0f,0f,3f)){
+                pointLightFeld.lightColor = Vector3f(1f,1f,4f)
+            }else pointLightFeld.lightColor = listOfTokens[lightytighty-1+ 4 *(playersTurn-1)].colour
             status = 2
         }
 
         if (status == 2){
             cameraType = 4
-            /*if (status2) {
-                if (diceRoll == 1) renderableDice.rotateLocal(3.14f, 0f, 0f)
-                else if (diceRoll == 2) renderableDice.rotateLocal(0f, 1.57f, 0f)
-                else if (diceRoll == 3) renderableDice.rotateLocal(-1.57f, 0f, 0f)
-                else if (diceRoll == 4) renderableDice.rotateLocal(1.57f, 0f, 0f)
-                else if (diceRoll == 5) renderableDice.rotateLocal(0f, -1.57f, 0f)
-
-                status2 = false
-            }*/
         }
 
         if(status == 3){
@@ -849,23 +705,10 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
                 if (listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens.size > 0){
                     listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens[
                             listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens.size-1].isBlocked = false
-                            println("vorm move")
-                            println(listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens[
-                                    listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens.size-1].colour)
-                            println("Token Nummer " + listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens[
-                                    listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens.size-1].number + " wurde gesetzt auf " +
-                                    listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens[
-                                            listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens.size-1].isBlocked)
-
-
                 }
             }
             if (listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position == 0 && listOfTokens[lightytighty-1  + 4 *(playersTurn-1)] != listOfTokens[(playersTurn-1)*4]){
                 listOfTokens[(lightytighty-1  + 4 *(playersTurn-1))-1].isBlocked = false
-                println("falls stein auf 0 lag")
-                /*println("Token " + listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens[
-                        listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens.size-1] + " mit Spielstein  Nummer "+ listOfTokens[(lightytighty-1  + 4 *(playersTurn-1))-1].number + " wurde gesetzt auf " + listOfTokens[(lightytighty-1  + 4 *(playersTurn-1))-1].isBlocked)
-*/
             }
 
 
@@ -879,26 +722,12 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
             if (listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens.size > 1){
                 listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens[
                         listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens.size-2].isBlocked = true
-                println("nach dem move")
-                println(listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens[
-                        listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens.size-2].colour)
-                println("Token Nummer "+ listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens[
-                        listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens.size-2].number + " wurde gesetzt auf "+
-                        listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens[
-                                listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens.size-2].isBlocked)
-
-
             }
             if (listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].isWater){
                 listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].isWater = false
                 listOfHexagons[listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position-1].hexagonListOfTokens.set(0,Token(true, listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].position, Vector3f(0f,0f,0f), 0, false, mutableListOf()))
                 listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].isBlocked = true
                 listOfTokens[lightytighty-1 + 4 *(playersTurn-1)].isIsland = true
-                println("falls stein ins wasser fällt")
-                println(listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].colour)
-                println("Token Nummer " + listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].number +" wurde gesetzt auf "+ listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].isBlocked)
-
-
                 listOfTokens[lightytighty-1  + 4 *(playersTurn-1)].colour = Vector3f(0f,0f,0f)
             }
 
