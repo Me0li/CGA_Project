@@ -24,23 +24,28 @@ Listen Sie hier noch einmal alle Teammitglieder auf.
   - dynamische Parameter werden eingesetzt 
 
 # Steuerung
-R   ->   Wechsel verschiedener Shaderprogramme
-T   ->   Wechsel zwischen verschiednenen Leveln des Cell-Shadings
-F   ->   Wechsel zwischen verschiedenen Grafikmodellen
 
-1   ->   3rd Person Kamera
-2   ->   Orbital Kamera
-3   ->   Free Flight Kamera
+Allgemein:
+| Eingabe | Funktion | 
+|------|----------------|
+| R | Wechsel verschiedener Shaderprogramme | 
+| T | Wechsel zwischen verschiednenen Leveln des Cell-Shadings | 
+| F | Wechsel zwischen verschiedenen Grafikmodellen | 
+| 1 | 3rd Person Kamera | 
+| 2 | Orbital Kamera | 
+| 3 | Free Flight Kamera | 
+| Pfeil links | Spielstein links auswählen | 
+| Pfeil rechts | Spielstein rechts auswählen | 
+| Enter | Auswahl bestätigen | 
 
 Free Flight Kamera:
-WASD + Maus  ->  Bewegung der Free Flight Kamera
-Leer  ->   Bewegung der Free Flight Kamera nach oben
-STRG  ->   Bewegung der Free Flight Kamera nach unten
+| Eingabe | Funktion | 
+|------|----------------|
+| WASD + Maus | Bewegung der Free Flight Kamera | 
+| Leer | Bewegung der Free Flight Kamera nach oben | 
+| STRG |  Bewegung der Free Flight Kamera nach unten | 
 
 3rd Person Kamera:
-Maus  ->   Bewegung der 3rd Person Kamera
-
-Pfeil links   ->  Spielstein links auswählen
-Pfeil rechts  ->   Spielstein rechts auswählen
-
-Enter -> Auswahl bestätigen
+| Eingabe | Funktion | 
+|------|----------------|
+| Maus | Bewegung der 3rd Person Kamera | 
