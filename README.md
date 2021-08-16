@@ -42,7 +42,7 @@ Free Flight Kamera:
 | Eingabe | Funktion | 
 |------|----------------|
 | WASD + Maus | Bewegung der Free Flight Kamera | 
-| Leer | Bewegung der Free Flight Kamera nach oben | 
+| Leertaste | Bewegung der Free Flight Kamera nach oben | 
 | STRG |  Bewegung der Free Flight Kamera nach unten | 
 
 3rd Person Kamera:
