@@ -49,3 +49,4 @@ Free Flight Kamera:
 | Eingabe | Funktion | 
 |------|----------------|
 | Maus | Bewegung der 3rd Person Kamera | 
+| Mausrad | Kamerazoom | 
