@@ -5,8 +5,8 @@ Hier könnter ein cooler Name stehen
 
 # Teammitglieder
 Listen Sie hier noch einmal alle Teammitglieder auf.
-- Oliver Mertens
-- Daniel Weyand
+- Oliver Mertens     ->   1119032
+- Daniel Weyand     ->  11120186
 
 # Featureliste
 Listen Sie hier alle relevanten Features als Liste mit sinnvoller Reihenfolge auf mit Angabe wer das Feature implementiert hat.
