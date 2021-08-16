@@ -9,12 +9,38 @@ Listen Sie hier noch einmal alle Teammitglieder auf.
 - Daniel Weyand     ->  11120186
 
 # Featureliste
-Listen Sie hier alle relevanten Features als Liste mit sinnvoller Reihenfolge auf mit Angabe wer das Feature implementiert hat.
-Bei starker Ungleicheit der Features behalten wir uns eine individuelle Notenvergabe vor.
+- Das Spiel
 
-Bspw.
+- Interaktiver Wechsel zwischen verschiedenen Kameraperspektiven:
+  - 3rd Person View um den aktuell gewählten Spielstein (mit Zoomfunktion)
+  - Orbital Camera auf das Spielbrett
+  - Freeflight Camera
+  - Dice Camera
+  
+- Darstellung des Spielbretts in verschiedenen Grafikstilen möglich
+- Skybox 
+- Rendering verschiedener Modelle innerhalb einer zusammenhängenden Spielszene
+- Wechsel zwischen verschiednenen Shadern möglich
+  - dynamische Parameter werden eingesetzt 
 
-- Verschiedene Kameramodelle (Wechsel zwischen orthographischer und perspektivischer Kamera mittels "c") (Berta)
-- Dynamische Kamera (Steuerung mittels Maus und "WASD" auf der Tastatur) (Carola und Armin)
-- Verschiedene Shaderprogramme (Wechsel mittels "s") (Carola)
-- ...
+# Steuerung
+R   -   Wechsel verschiedener Shaderprogramme
+T   -   Wechsel zwischen verschiednenen Leveln des Cell-Shadings
+F   -   Wechsel zwischen verschiedenen Grafikmodellen
+
+1   -   3rd Person Kamera
+2   -   Orbital Kamera
+3   -   Free Flight Kamera
+
+Free Flight Kamera:
+WASD + Maus  -  Bewegung der Free Flight Kamera
+Leer  -   Bewegung der Free Flight Kamera nach oben
+STRG  -   Bewegung der Free Flight Kamera nach unten
+
+3rd Person Kamera:
+Maus  -   Bewegung der 3rd Person Kamera
+
+Pfeil links   -   Spielstein links auswählen
+Pfeil rechts  -   Spielstein rechts auswählen
+
+Enter - Auswahl bestätigen
