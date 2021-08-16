@@ -29,7 +29,7 @@ Allgemein:
 | Eingabe | Funktion | 
 |------|----------------|
 | R | Wechsel verschiedener Shaderprogramme | 
-| T | Wechsel zwischen verschiednenen Leveln des Cell-Shadings | 
+| T | Wechsel zwischen verschiedenen Leveln des Cell-Shadings | 
 | F | Wechsel zwischen verschiedenen Grafikmodellen | 
 | 1 | 3rd Person Kamera | 
 | 2 | Orbital Kamera | 
