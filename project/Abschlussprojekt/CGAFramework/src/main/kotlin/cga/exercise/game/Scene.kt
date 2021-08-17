@@ -82,6 +82,11 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
     private val tokenMaterial: Material
     private val hexagonMaterial: Material
     private val hexagonMeshWater: Mesh
+    private var fov: Float = 1.57f
+    private var pointLightGlobalLO: PointLight
+    private var pointLightGlobalLU: PointLight
+    private var pointLightGlobalRO: PointLight
+    private var pointLightGlobalRU: PointLight
 
 
     //scene setup
@@ -351,8 +356,11 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
         pointLightFeld = PointLight(Vector3f(50.0f,1f,0.0f), listOfTokens[0].colour, Vector3f(1.0f, 0.5f, 0.1f))
         pointLightToken = PointLight(Vector3f(0f, 10f,0f), Vector3f(1f, 1f, 1f), Vector3f(1.0f, 0.5f, 0.1f))
         //spotLight = SpotLight(Vector3f(0.0f,1.0f,0.0f), Vector3f(1.0f, 1.0f, 1.0f), 0.17f, 0.44f, Vector3f(0.5f, 0.05f, 0.01f))
-        pointLightGlobal = PointLight(Vector3f(6f, 10f, 10f), Vector3f(10f), Vector3f(1.0f,0.5f,0.1f))
-
+        pointLightGlobal = PointLight(Vector3f(6f, 10f, 10f), Vector3f(6f), Vector3f(1.0f,0.5f,0.1f))
+        pointLightGlobalRO = PointLight(Vector3f(15f, 10f, 2f), Vector3f(4f), Vector3f(1.0f, 0.5f, 0.1f))
+        pointLightGlobalRU = PointLight(Vector3f(15f, 10f, 17f), Vector3f(4f), Vector3f(1.0f, 0.5f, 0.1f))
+        pointLightGlobalLO = PointLight(Vector3f(-5f, 10f, 2f), Vector3f(4f), Vector3f(1.0f, 0.5f, 0.1f))
+        pointLightGlobalLU = PointLight(Vector3f(-5f, 10f, 17f), Vector3f(4f), Vector3f(1.0f, 0.5f, 0.1f))
         pointLightToken.rotateLocal(1.57f, 0f, 0f)
 
         //Token Kamera wird an den obersten Stein des ersten Spielers angehängt
@@ -370,12 +378,12 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
         )
 
         val facesCubemapStil2 = arrayOf<String>(
-            "assets/textures/simpsons2rt.png",
-            "assets/textures/simpsons2lf.png",
-            "assets/textures/simpsons2up.png",
-            "assets/textures/simpsons2dn.png",
-            "assets/textures/simpsons2ft.png",
-            "assets/textures/simpsons2bk.png"
+            "assets/textures/lakeboxright.png",
+            "assets/textures/lakeboxleft.png",
+            "assets/textures/lakeboxup.png",
+            "assets/textures/lakeboxdown.png",
+            "assets/textures/lakeboxfront.png",
+            "assets/textures/lakeboxback.png"
 
         )
 
@@ -401,8 +409,13 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
             // spotLight.bind(staticShader, "spotlight", Camera.getCalculateViewMatrix())
             pointLightToken.bind(staticShader, "pointLightToken", cameraToken.getCalculateViewMatrix())
             pointLightGlobal.bind(staticShader, "pointLightGlobal", cameraToken.getCalculateViewMatrix())
+            pointLightGlobalRO.bind(staticShader, "pointlightRO", cameraToken.getCalculateViewMatrix())
+            pointLightGlobalRU.bind(staticShader, "pointlightRU", cameraToken.getCalculateViewMatrix())
+            pointLightGlobalLO.bind(staticShader, "pointlightLO", cameraToken.getCalculateViewMatrix())
+            pointLightGlobalLU.bind(staticShader, "pointlightLU", cameraToken.getCalculateViewMatrix())
 
             cameraToken.bind(staticShader)
+            staticShader.setUniform4f("projection", Matrix4f().perspective(fov, cameraToken.aspectRatio, cameraToken.nearPlane, cameraToken.farPlane), false)
         }
 
         if (cameraType == 2){
@@ -410,6 +423,10 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
             // spotLight.bind(staticShader, "spotlight", Camera.getCalculateViewMatrix())
             pointLightToken.bind(staticShader, "pointLightToken", cameraCeiling.getCalculateViewMatrix())
             pointLightGlobal.bind(staticShader, "pointLightGlobal", cameraCeiling.getCalculateViewMatrix())
+            pointLightGlobalRO.bind(staticShader, "pointlightRO", cameraCeiling.getCalculateViewMatrix())
+            pointLightGlobalRU.bind(staticShader, "pointlightRU", cameraCeiling.getCalculateViewMatrix())
+            pointLightGlobalLO.bind(staticShader, "pointlightLO", cameraCeiling.getCalculateViewMatrix())
+            pointLightGlobalLU.bind(staticShader, "pointlightLU", cameraCeiling.getCalculateViewMatrix())
 
             cameraCeiling.bind(staticShader)
         }
@@ -418,6 +435,10 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
             // spotLight.bind(staticShader, "spotlight", Camera.getCalculateViewMatrix())
             pointLightToken.bind(staticShader, "pointLightToken", cameraFree.getCalculateViewMatrix())
             pointLightGlobal.bind(staticShader, "pointLightGlobal", cameraFree.getCalculateViewMatrix())
+            pointLightGlobalRO.bind(staticShader, "pointlightRO", cameraFree.getCalculateViewMatrix())
+            pointLightGlobalRU.bind(staticShader, "pointlightRU", cameraFree.getCalculateViewMatrix())
+            pointLightGlobalLO.bind(staticShader, "pointlightLO", cameraFree.getCalculateViewMatrix())
+            pointLightGlobalLU.bind(staticShader, "pointlightLU", cameraFree.getCalculateViewMatrix())
 
             cameraFree.bind(staticShader)
         }
@@ -427,6 +448,10 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
             // spotLight.bind(staticShader, "spotlight", Camera.getCalculateViewMatrix())
             pointLightToken.bind(staticShader, "pointLightToken", cameraDice.getCalculateViewMatrix())
             pointLightGlobal.bind(staticShader, "pointLightGlobal", cameraDice.getCalculateViewMatrix())
+            pointLightGlobalRO.bind(staticShader, "pointlightRO", cameraDice.getCalculateViewMatrix())
+            pointLightGlobalRU.bind(staticShader, "pointlightRU", cameraDice.getCalculateViewMatrix())
+            pointLightGlobalLO.bind(staticShader, "pointlightLO", cameraDice.getCalculateViewMatrix())
+            pointLightGlobalLU.bind(staticShader, "pointlightLU", cameraDice.getCalculateViewMatrix())
 
             cameraDice.bind(staticShader)
         }
@@ -1010,6 +1035,12 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
                 renderableDice.scaleLocal(Vector3f(2f))
                 renderableDice.translateGlobal(Vector3f(5f, 0.5f,-0.5f))
 
+                pointLightGlobalRO.lightColor = Vector3f(0f)
+                pointLightGlobalRU.lightColor = Vector3f(0f)
+                pointLightGlobalLO.lightColor = Vector3f(0f)
+                pointLightGlobalLU.lightColor = Vector3f(0f)
+
+
                 emitSwitch = 1
             }
             else if (emitSwitch == 1){
@@ -1034,6 +1065,11 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
                 renderableDice = Renderable(renderableListDice)
                 renderableDice.scaleLocal(Vector3f(2f))
                 renderableDice.translateGlobal(Vector3f(5f, 0.5f,-0.5f))
+
+                pointLightGlobalRO.lightColor = Vector3f(4f)
+                pointLightGlobalRU.lightColor = Vector3f(4f)
+                pointLightGlobalLO.lightColor = Vector3f(4f)
+                pointLightGlobalLU.lightColor = Vector3f(4f)
 
                 emitSwitch = 0
             }
@@ -1067,6 +1103,11 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
         return kotlin.random.Random.nextInt(1, 7)
     }
 
+    fun onMouseScroll(xoffset: Double, yoffset: Double){
+        fov -= yoffset.toFloat()
+        if (fov < 0.1f) fov = 0.1f
+        if (fov > 1.57f) fov = 1.57f
+    }
 
     fun cleanup() {}
 }

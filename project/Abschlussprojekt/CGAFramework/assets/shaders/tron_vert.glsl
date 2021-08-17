@@ -15,6 +15,10 @@ out struct VertexData
     vec2 texture;
     vec3 normal;
     vec3 pointLightToLight;
+    vec3 pointLightROToLight;
+    vec3 pointLightRUToLight;
+    vec3 pointLightLOToLight;
+    vec3 pointLightLUToLight;
     vec3 pointLightTokenToLight;
     vec3 pointLightGlobalToLight;
     vec3 spotLightToLight;
@@ -28,6 +32,39 @@ struct PointLight
     vec3 kWerte;
 };
 uniform PointLight pointlight;
+
+struct PointLightRO
+{
+    vec3 LightColor;
+    vec3 LightPosi;
+    vec3 kWerte;
+};
+uniform PointLightRO pointlightRO;
+
+struct PointLightRU
+{
+    vec3 LightColor;
+    vec3 LightPosi;
+    vec3 kWerte;
+};
+uniform PointLightRU pointlightRU;
+
+struct PointLightLO
+{
+    vec3 LightColor;
+    vec3 LightPosi;
+    vec3 kWerte;
+};
+uniform PointLightLO pointlightLO;
+
+struct PointLightLU
+{
+    vec3 LightColor;
+    vec3 LightPosi;
+    vec3 kWerte;
+};
+uniform PointLightLU pointlightLU;
+
 
 struct PointLightToken
 {
@@ -75,5 +112,9 @@ void main(){
     vertexData.pointLightTokenToLight = pointLightToken.LightPosi - vertexDataPosi.xyz;
     vertexData.spotLightToLight = spotlight.LightPosi - vertexDataPosi.xyz;
     vertexData.pointLightGlobalToLight = pointLightGlobal.LightPosi - vertexDataPosi.xyz;
+    vertexData.pointLightROToLight = pointlightRO.LightPosi - vertexDataPosi.xyz;
+    vertexData.pointLightRUToLight = pointlightRU.LightPosi - vertexDataPosi.xyz;
+    vertexData.pointLightLOToLight = pointlightLO.LightPosi - vertexDataPosi.xyz;
+    vertexData.pointLightLUToLight = pointlightLU.LightPosi - vertexDataPosi.xyz;
 
 }

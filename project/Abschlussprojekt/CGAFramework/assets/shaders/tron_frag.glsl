@@ -15,6 +15,10 @@ in struct VertexData
     vec2 texture;
     vec3 normal;
     vec3 pointLightToLight;
+    vec3 pointLightROToLight;
+    vec3 pointLightRUToLight;
+    vec3 pointLightLOToLight;
+    vec3 pointLightLUToLight;
     vec3 pointLightTokenToLight;
     vec3 pointLightGlobalToLight;
     vec3 spotLightToLight;
@@ -28,6 +32,38 @@ struct PointLight
     vec3 kWerte;
 };
 uniform PointLight pointlight;
+
+struct PointLightRO
+{
+    vec3 LightColor;
+    vec3 LightPosi;
+    vec3 kWerte;
+};
+uniform PointLightRO pointlightRO;
+
+struct PointLightRU
+{
+    vec3 LightColor;
+    vec3 LightPosi;
+    vec3 kWerte;
+};
+uniform PointLightRU pointlightRU;
+
+struct PointLightLO
+{
+    vec3 LightColor;
+    vec3 LightPosi;
+    vec3 kWerte;
+};
+uniform PointLightLO pointlightLO;
+
+struct PointLightLU
+{
+    vec3 LightColor;
+    vec3 LightPosi;
+    vec3 kWerte;
+};
+uniform PointLightLU pointlightLU;
 
 struct PointLightToken
 {
@@ -103,11 +139,19 @@ void main(){
     float lSL = length(vertexData.spotLightToLight);
     float lPLT = length(vertexData.pointLightTokenToLight);
     float lPLG = length(vertexData.pointLightGlobalToLight);
+    float lPLRO = length(vertexData.pointLightROToLight);
+    float lPLRU = length(vertexData.pointLightRUToLight);
+    float lPLLO = length(vertexData.pointLightLOToLight);
+    float lPLLU = length(vertexData.pointLightLUToLight);
 
     vec3 LP = vertexData.pointLightToLight / lPL;
     vec3 LS = vertexData.spotLightToLight / lSL;
     vec3 LPT = vertexData.pointLightTokenToLight / lPLT;
     vec3 LPG = vertexData.pointLightGlobalToLight / lPLG;
+    vec3 LPRO = vertexData.pointLightROToLight / lPLRO;
+    vec3 LPRU = vertexData.pointLightRUToLight / lPLRU;
+    vec3 LPLO = vertexData.pointLightLOToLight / lPLLO;
+    vec3 LPLU = vertexData.pointLightLUToLight / lPLLU;
 
     vec3 emitColor = texture(material.emissive,vertexData.texture).rgb;
     vec3 diffColor = texture(material.diffuse,vertexData.texture).rgb;
@@ -121,6 +165,10 @@ void main(){
     //* getSpotLightIntensity(lSL, LS, spotlight.spotDirection, spotlight.LightColor, spotlight.innerConeAngle, spotlight.outerConeAngle)
     + BRDFBlinn(N, LPT, V, material.shininess, diffColor, specColor) * getPointLightIntensity(lPLT, pointLightToken.LightColor)
     + BRDFBlinn(N, LPG, V, material.shininess, diffColor, specColor) * getPointLightIntensity(lPLG, pointLightGlobal.LightColor)
+    + BRDFBlinn(N, LPRO, V, material.shininess, diffColor, specColor) * getPointLightIntensity(lPLRO, pointlightRO.LightColor)
+    + BRDFBlinn(N, LPRU, V, material.shininess, diffColor, specColor) * getPointLightIntensity(lPLRU, pointlightRU.LightColor)
+    + BRDFBlinn(N, LPLO, V, material.shininess, diffColor, specColor) * getPointLightIntensity(lPLLO, pointlightLO.LightColor)
+    + BRDFBlinn(N, LPLU, V, material.shininess, diffColor, specColor) * getPointLightIntensity(lPLLU, pointlightLU.LightColor)
     );
 
 
