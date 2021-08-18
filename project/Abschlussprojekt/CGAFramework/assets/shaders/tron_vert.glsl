@@ -95,13 +95,9 @@ uniform SpotLight spotlight;
 
 //
 void main(){
-    //vec4 pos = model_matrix * vec4(position, 1.0f);
-    //gl_Position = vec4(pos.xy, -pos.z, 1.0f);
     mat4 viewModel = view * model_matrix;
     vec4 vertexDataPosi = viewModel * vec4(position, 1.0f);
     gl_Position = projection * vertexDataPosi;
-    //vertexData.position = pos.xyz;
-
 
     vertexData.texture = tcMultiplier * texture;
     mat4 inverse_matrix = transpose(inverse(viewModel));
@@ -116,5 +112,4 @@ void main(){
     vertexData.pointLightRUToLight = pointlightRU.LightPosi - vertexDataPosi.xyz;
     vertexData.pointLightLOToLight = pointlightLO.LightPosi - vertexDataPosi.xyz;
     vertexData.pointLightLUToLight = pointlightLU.LightPosi - vertexDataPosi.xyz;
-
 }
