@@ -448,7 +448,7 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
         //Helligkeit/Farbe des Würfels wird die Farbe des aktuellen Spielers gesetzt
         if (playersTurn == 1){
             for (i in 0 until 4){
-                if (!listOfTokens[i].isBlocked){
+                if (listOfTokens[i].colour != Vector3f(0f,0f,0f)){
                     staticShader.setUniform3f("sceneColor",listOfTokens[i].colour)
                     renderableDice.render(staticShader)
                 }
@@ -457,7 +457,7 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
         }
         if (playersTurn == 2){
             for (i in 4 until 8){
-                if (!listOfTokens[i].isBlocked){
+                if (listOfTokens[i].colour != Vector3f(0f,0f,0f)){
                     staticShader.setUniform3f("sceneColor",listOfTokens[i].colour)
                     renderableDice.render(staticShader)
                 }
@@ -466,7 +466,7 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
         if (playerCount >= 3){
             if (playersTurn == 3){
                 for (i in 8 until 12){
-                    if (!listOfTokens[i].isBlocked){
+                    if (listOfTokens[i].colour != Vector3f(0f,0f,0f)){
                         staticShader.setUniform3f("sceneColor",listOfTokens[i].colour)
                         renderableDice.render(staticShader)
                     }
@@ -476,7 +476,7 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
         if (playerCount == 4){
             if (playersTurn == 4){
                 for (i in 12 until 16){
-                    if (!listOfTokens[i].isBlocked){
+                    if (listOfTokens[i].colour != Vector3f(0f,0f,0f)){
                         staticShader.setUniform3f("sceneColor",listOfTokens[i].colour)
                         renderableDice.render(staticShader)
                     }
