@@ -103,6 +103,7 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
 
         cameraFree = TronCamera()
         cameraFree.translateLocal(Vector3f(0f,1f,0f))
+        cameraFree.rotateLocal(0f, 3.14f, 0f)
 
         cameraToken = TronCamera()
         cameraToken.rotateLocal(-0.2f,0f,0f)
