@@ -446,23 +446,40 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
 
         //Helligkeit/Farbe des Würfels wird die Farbe des aktuellen Spielers gesetzt
         if (playersTurn == 1){
-            staticShader.setUniform3f("sceneColor",listOfTokens[0].colour)
-            renderableDice.render(staticShader)
+            for (i in 0 until 4){
+                if (!listOfTokens[i].isBlocked){
+                    staticShader.setUniform3f("sceneColor",listOfTokens[i].colour)
+                    renderableDice.render(staticShader)
+                }
+            }
+
         }
         if (playersTurn == 2){
-            staticShader.setUniform3f("sceneColor",listOfTokens[4].colour)
-            renderableDice.render(staticShader)
+            for (i in 4 until 8){
+                if (!listOfTokens[i].isBlocked){
+                    staticShader.setUniform3f("sceneColor",listOfTokens[i].colour)
+                    renderableDice.render(staticShader)
+                }
+            }
         }
         if (playerCount >= 3){
             if (playersTurn == 3){
-                staticShader.setUniform3f("sceneColor",listOfTokens[8].colour)
-                renderableDice.render(staticShader)
+                for (i in 8 until 12){
+                    if (!listOfTokens[i].isBlocked){
+                        staticShader.setUniform3f("sceneColor",listOfTokens[i].colour)
+                        renderableDice.render(staticShader)
+                    }
+                }
             }
         }
         if (playerCount == 4){
             if (playersTurn == 4){
-                staticShader.setUniform3f("sceneColor",listOfTokens[12].colour)
-                renderableDice.render(staticShader)
+                for (i in 12 until 16){
+                    if (!listOfTokens[i].isBlocked){
+                        staticShader.setUniform3f("sceneColor",listOfTokens[i].colour)
+                        renderableDice.render(staticShader)
+                    }
+                }
             }
         }
 
