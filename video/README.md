@@ -1,10 +1,5 @@
 # Video
-Erstellen Sie ein max. 3 Minuten langes Video, welches ihr laufendes Projekt vorstellt. 
-Erläutern Sie dabei, welche Features Sie implementiert haben und zeigen Sie diese.
-Das Video darf nur Ihre Anwendung zeigen, sowie Ihre Stimmen beinhalten.
+Das Video kann unter folgendem Link aufgerufen werden:
+https://th-koeln.sciebo.de/s/hufWvMAd1S9RZWp
 
-Zur Erstellung können Sie ein beliebiges Programm verwenden, wir können folgende empfehlen:
-- https://obsproject.com/
-- https://www.techsmith.de/camtasia.html
-
-Bitte speichern Sie das Video als MP4 (H.264).
+Die ersten 1,5 Minuten erklären noch einmal die Spielregeln des Spiels und die restliche Zeit über werden die Features erläutert.
