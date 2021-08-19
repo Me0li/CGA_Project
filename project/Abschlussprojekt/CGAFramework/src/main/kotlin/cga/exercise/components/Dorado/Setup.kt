@@ -3,41 +3,33 @@ package cga.exercise.components.Dorado
 import org.joml.Vector3f
 
 class Setup {
-    var players: Int = 4
-    var dingdong: Boolean = false
+    var players: Int = 0
     val colors: MutableList<String> = mutableListOf()
     val farbArray : MutableList<Vector3f> = mutableListOf()
 
 
-
+    //Die Anzahl der Spieler wird hier aufgenommen
     fun players() {
-    println("Wie viele Spieler nehmen teil? Maximal 4: ")
-    val testing  = readLine()
-    var status = 0
+        println("Wie viele Spieler nehmen teil? Maximal 4: ")
+        val testing  = readLine()
+        var status = 0
 
         if (testing != "2" && testing != "3" && testing != "4"){
             println("Bitte wählen Sie eine Spieleranzahl zwischen 2 und 4!")
             players()
             status = 1
         }
-    if (status == 0){
-        if (testing != null) {
-            players =  testing.toInt()
+        if (status == 0){
+            if (testing != null) {
+                players =  testing.toInt()
+            }
         }
+
+
     }
-
-
-}
-
+    //Die Spieler dürfen sich ihre Farbe wählen
     fun colors(spielerAnzahl: Int, n: Int): MutableList<Vector3f> {
-        farbArray.add(Vector3f(3f,0f,0f))
-        farbArray.add(Vector3f(0f,0f,3f))
-        farbArray.add(Vector3f(0f,3f,0f))
-        farbArray.add(Vector3f(3f,3f,0f))
-        return farbArray
-
-
-
+        //status wird dazu verwendet, dass wir colors bei Fehleingabe neu aufrufen können ohne redundante Daten zu speichern
         var status = 0
         for (i in n until spielerAnzahl) {
             if (status == 0) {
@@ -71,10 +63,6 @@ class Setup {
                 }
             }
         }
-        if (status == 0) {
-            dingdong = true
-            return farbArray
-        } else return farbArray
-
+        return farbArray
     }
 }

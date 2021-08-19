@@ -5,8 +5,9 @@ import cga.exercise.components.Dorado.Setup
 
 fun main() {
 
+    //bevor das Spielfenster sich öffnet werden die Spieleinstellungen vorgenommen
     val setup = Setup()
-    //setup.players()
+    setup.players()
     val colors = setup.colors(setup.players, 0)
 
 

@@ -15,6 +15,10 @@ out struct VertexData
     vec2 texture;
     vec3 normal;
     vec3 pointLightToLight;
+    vec3 pointLightROToLight;
+    vec3 pointLightRUToLight;
+    vec3 pointLightLOToLight;
+    vec3 pointLightLUToLight;
     vec3 pointLightTokenToLight;
     vec3 pointLightGlobalToLight;
     vec3 spotLightToLight;
@@ -28,6 +32,38 @@ struct PointLight
     vec3 kWerte;
 };
 uniform PointLight pointlight;
+
+struct PointLightRO
+{
+    vec3 LightColor;
+    vec3 LightPosi;
+    vec3 kWerte;
+};
+uniform PointLightRO pointlightRO;
+
+struct PointLightRU
+{
+    vec3 LightColor;
+    vec3 LightPosi;
+    vec3 kWerte;
+};
+uniform PointLightRU pointlightRU;
+
+struct PointLightLO
+{
+    vec3 LightColor;
+    vec3 LightPosi;
+    vec3 kWerte;
+};
+uniform PointLightLO pointlightLO;
+
+struct PointLightLU
+{
+    vec3 LightColor;
+    vec3 LightPosi;
+    vec3 kWerte;
+};
+uniform PointLightLU pointlightLU;
 
 struct PointLightToken
 {
@@ -58,13 +94,9 @@ uniform SpotLight spotlight;
 
 //
 void main(){
-    //vec4 pos = model_matrix * vec4(position, 1.0f);
-    //gl_Position = vec4(pos.xy, -pos.z, 1.0f);
     mat4 viewModel = view * model_matrix;
     vec4 vertexDataPosi = viewModel * vec4(position, 1.0f);
     gl_Position = projection * vertexDataPosi;
-    //vertexData.position = pos.xyz;
-
 
     vertexData.texture = tcMultiplier * texture;
     mat4 inverse_matrix = transpose(inverse(viewModel));
@@ -74,6 +106,8 @@ void main(){
     vertexData.pointLightToLight = pointlight.LightPosi - vertexDataPosi.xyz;
     vertexData.pointLightTokenToLight = pointLightToken.LightPosi - vertexDataPosi.xyz;
     vertexData.spotLightToLight = spotlight.LightPosi - vertexDataPosi.xyz;
-    vertexData.pointLightGlobalToLight = pointLightGlobal.LightPosi - vertexDataPosi.xyz;
-
+    vertexData.pointLightROToLight = pointlightRO.LightPosi - vertexDataPosi.xyz;
+    vertexData.pointLightRUToLight = pointlightRU.LightPosi - vertexDataPosi.xyz;
+    vertexData.pointLightLOToLight = pointlightLO.LightPosi - vertexDataPosi.xyz;
+    vertexData.pointLightLUToLight = pointlightLU.LightPosi - vertexDataPosi.xyz;
 }

@@ -8,7 +8,6 @@ class Token(var isBlocked:Boolean = false, var position: Int = 0, var colour: Ve
 
     fun move(hexagonList: MutableList<Hexagon>, amount: Int){
 
-
         for(i in 0 until amount){
             val neuePosi = hexagonList[position+i].getWorldPosition()
             val steinPosi = this.getWorldPosition()
