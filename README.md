@@ -1,7 +1,7 @@
 # CGA Projekt SS21
 
 # Projektname
-Pokémon Dorado
+![Image](./project/Abschlussprojekt/Texturen/Cover.png)
 
 # Teammitglieder
 - Oliver Mertens ->  11119032
