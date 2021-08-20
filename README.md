@@ -18,7 +18,7 @@ Die folgenden Features wurden allesamt in Zusammenarbeit erstellt:
   - Dice Camera
   
 - Darstellung des Spielbretts in verschiedenen Grafikstilen möglich
-  - Verwundung von selbst erstellten Texturen
+  - Verwendung von selbst erstellten Texturen
 - Skybox 
 - Rendering verschiedener Modelle innerhalb einer zusammenhängenden Spielszene
 - Wechsel zwischen verschiednenen Shadern möglich
