@@ -35,7 +35,7 @@ Landet ein Stein im Waser, so ist er verloren! Alle nachfolgenden Steine können
 
 Das Ziel muss mit einem exaktem Wurf erreicht werden. Ein Spielstein, der über das Ziel hinausschießen würden, kann in diesem Zug nicht ziehen!
 
-Der erste Stein, der das Ziel erreicht, bekommt 100 Punkte. Jeder später ankommende Stein erhält jeweils 10 Punkte mehr. Also der zweite Stein erhält 110 Punkte, der dritte 120 usw. Wenn kein Spieler mehr ziehen kann, gewintt der Spieler mit den meisten Punkten.
+Der erste Stein, der das Ziel erreicht, bekommt 100 Punkte. Jeder später ankommende Stein erhält jeweils 10 Punkte mehr. Also der zweite Stein erhält 110 Punkte, der dritte 120 usw. Wenn kein Spieler mehr ziehen kann, gewinnt der Spieler mit den meisten Punkten.
 
 # Steuerung
 Allgemein:
