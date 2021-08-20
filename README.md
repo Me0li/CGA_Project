@@ -67,5 +67,5 @@ Free Flight Kamera:
 # Quellen
 3D-Objekte:
 - Hexagon       https://sketchfab.com/3d-models/hexagon-no-textures-75a0b9e8c51b4ad98d0a9a74735409b0
-- Spielsteine   asdf  
+- Spielsteine   https://sketchfab.com/3d-models/blue-man-checker-game-581bb93174d04bd7a7a9f8d9f6ae5039  
 - Skybox        https://gamebanana.com/mods/218297
