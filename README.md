@@ -25,15 +25,15 @@ Die folgenden Features wurden allesamt in Zusammenarbeit erstellt:
   - dynamische Parameter werden eingesetzt 
 
 # Spielregeln
-Pokémon Dorado ist ein Spiel für 2 bis 4 Personen. Jeder Spieler wählt sich eine Farbe aus, woraufhin jewils 4 Spielsteine auf das Startfeld platziert werden.
+Pokémon Dorado ist ein Spiel für 2 bis 4 Personen. Jeder Spieler wählt sich eine Farbe aus, woraufhin jeweils 4 Spielsteine auf das Startfeld platziert werden.
 
-Das Zugrecht geht im Uhrzeigersinn um. Der Spieler am Zug würfelt und muss dann einen seiner Spielsteine um genau diese Zahl auf dem Spielfeld vorrücken. Hat er mehrere Möglichkeiten, darf er frei die günstigste Wählen. Kann er keinen Stein ziehen, muss er aussetzen.
+Das Zugrecht geht im Uhrzeigersinn um. Der Spieler am Zug würfelt und muss dann einen seiner Spielsteine um genau diese Zahl auf dem Spielfeld vorrücken. Hat er mehrere Möglichkeiten, darf er frei die Günstigste wählen. Kann er keinen Stein ziehen, muss er aussetzen.
 
-Landet ein Stein auf einem besetzen Feld, wird er einfach auf die dort bereits stehenden Steine oben auf platziert. Dadurch bildet sich ein Turm. Von jedem Turm darf nur der oberste Stein ziehen, die darunterliegenden sind solange blockiert, bis alle darüber liegenden weggezogen sind.
+Landet ein Stein auf einem besetzten Feld, wird er einfach auf die dort bereits stehenden Steine oben drauf platziert. Dadurch bildet sich ein Turm. Von jedem Turm darf nur der oberste Stein ziehen, die Darunterliegenden sind solange blockiert, bis alle darüber liegenden weggezogen sind.
 
-Landet ein Stein im Waser, so ist er verloren! Alle nachfolgenden Steine können nun das Wasser an dieser Stelle sicheren Fußes überqueren, genau wie auf jedem anderen Landfeld.
+Landet ein Stein im Wasser, so ist er verloren! Alle nachfolgenden Steine können nun das Wasser an dieser Stelle sicheren Fußes überqueren, genau wie auf jedem anderen Landfeld.
 
-Das Ziel muss mit einem exaktem Wurf erreicht werden. Ein Spielstein, der über das Ziel hinausschießen würden, kann in diesem Zug nicht ziehen!
+Das Ziel muss mit einem exaktem Wurf erreicht werden. Ein Spielstein, der über das Ziel hinausschießen würde, kann in diesem Zug nicht ziehen!
 
 Der erste Stein, der das Ziel erreicht, bekommt 100 Punkte. Jeder später ankommende Stein erhält jeweils 10 Punkte mehr. Also der zweite Stein erhält 110 Punkte, der dritte 120 usw. Wenn kein Spieler mehr ziehen kann, gewinnt der Spieler mit den meisten Punkten.
 
