@@ -10,6 +10,7 @@ import cga.exercise.components.texture.Texture2D
 import cga.framework.GLError
 import cga.framework.GameWindow
 import cga.framework.OBJLoader
+import org.joml.Matrix3f
 import org.joml.Matrix4f
 import org.joml.Vector2f
 import org.joml.Vector3f
@@ -511,24 +512,24 @@ class Scene(private val window: GameWindow, private val playerCount: Int, player
         glDepthFunc(GL_LEQUAL)
         glDepthMask(false)
         skyboxShader.use()
-        skyboxShader.setUniform4f("model", skyboxScale.modelMatrix, false)
+        //skyboxShader.setUniform4f("model", skyboxScale.modelMatrix, false)
         if (cameraType == 1){
             skyboxShader.setUniform4f("projection", cameraToken.getCalculateProjectionMatrix(), false)
-            skyboxShader.setUniform4f("view", cameraToken.getCalculateViewMatrix(), false)
+            skyboxShader.setUniform4f("view", Matrix4f(Matrix3f(cameraToken.getCalculateViewMatrix())), false)
         }
 
         if (cameraType == 2){
             skyboxShader.setUniform4f("projection", cameraCeiling.getCalculateProjectionMatrix(), false)
-            skyboxShader.setUniform4f("view", cameraCeiling.getCalculateViewMatrix(), false)
+            skyboxShader.setUniform4f("view", Matrix4f(Matrix3f(cameraCeiling.getCalculateViewMatrix())), false)
         }
         if (cameraType == 3){
             skyboxShader.setUniform4f("projection", cameraFree.getCalculateProjectionMatrix(), false)
-            skyboxShader.setUniform4f("view", cameraFree.getCalculateViewMatrix(), false)
+            skyboxShader.setUniform4f("view", Matrix4f(Matrix3f(cameraFree.getCalculateViewMatrix())), false)
         }
 
         if (cameraType == 4){
             skyboxShader.setUniform4f("projection", cameraDice.getCalculateProjectionMatrix(), false)
-            skyboxShader.setUniform4f("view", cameraDice.getCalculateViewMatrix() , false)
+            skyboxShader.setUniform4f("view", Matrix4f(Matrix3f(cameraDice.getCalculateViewMatrix())) , false)
         }
         skybox.render()
         glDepthMask(true)
